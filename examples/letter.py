@@ -23,7 +23,7 @@ examples = preprocessing.MinMaxScaler().fit_transform(examples)
 
 labels = np.genfromtxt(fname, dtype=None, delimiter=',', usecols=label_col)
 
-knn_classifier = knn.KNN(n_neighbors=1)
+knn_classifier = knn.KNN(n_neighbors=3, distance_weighted=True)
 
 kfolds = cross_validation.KFold(n_instances, n_folds=5, shuffle=True)
 for train_indices, test_indices in kfolds:

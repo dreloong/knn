@@ -3,8 +3,10 @@ import util
 
 class KNN:
 
-    def __init__(self, n_neighbors=5, distance_metric='euclidean'):
+    def __init__(self, n_neighbors=5, distance_metric='euclidean',
+                 distance_weighted=False):
         self.n_neighbors = n_neighbors
+        self.distance_weighted = distance_weighted
 
         if distance_metric == 'euclidean':
             self.distance = util.euclidean_distance
@@ -28,10 +30,17 @@ class KNN:
         label_counts = {}
         nearest_neighbors = self.k_neighbors(example)
         for neighbor in nearest_neighbors:
+            weight = 1
+            if self.distance_weighted:
+                dist = self.distance(example, neighbor.example)
+                if dist == 0.0:
+                    return neighbor.label
+                weight = 1.0 / dist
+
             if neighbor.label in label_counts:
-                label_counts[neighbor.label] += 1
+                label_counts[neighbor.label] += weight
             else:
-                label_counts[neighbor.label] = 1
+                label_counts[neighbor.label] = weight
 
         return sorted(label_counts, key=label_counts.__getitem__)[-1]
 
