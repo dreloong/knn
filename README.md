@@ -1,6 +1,16 @@
 # kNN
 Simple implementation of k-nearest neighbors algorithm.
 
+## Usage
+
+```python
+import knn
+
+knn_classifier = knn.KNN(n_neighbors=3, distance_weighted=True)
+knn_classifier.fit(train_examples, train_labels)
+print knn_classifier.predict(test_example)
+```
+
 ## References
 
 Tutorials:
